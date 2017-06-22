@@ -1,0 +1,24 @@
+{
+  "name": "rssbot",
+  "version": "1.0.0",
+  "description": "A Slack bot that monitors RSS feeds and announces new articles.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chingubotsteam5/rssbot.git"
+  },
+  "keywords": [
+    "slack",
+    "bot",
+    "rss"
+  ],
+  "contributors": ["Artur Sęp", "Scott Spence", "Simon Morgan <sjm@sjm.io>"],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chingubotsteam5/rssbot/issues"
+  },
+  "homepage": "https://github.com/chingubotsteam5/rssbot#readme"
+}

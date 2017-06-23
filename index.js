@@ -21,3 +21,9 @@ bot.startRTM(function (err) {
     console.error(err);
   }
 });
+
+process.on("exit", bot.destroy);
+process.on("SIGINT", () => {
+  bot.destroy();
+  process.exit(1);
+});

@@ -10,9 +10,9 @@ if (!process.env.BOT_OAUTH_TOKEN || !process.env.PORT) {
   process.exit(1);
 }
 
-let controller = Botkit.slackbot({});
+const controller = Botkit.slackbot({});
 
-let bot = controller.spawn({
+const bot = controller.spawn({
   token: process.env.BOT_OAUTH_TOKEN
 });
 
@@ -28,7 +28,7 @@ process.on("SIGINT", () => {
   process.exit(1);
 });
 
-let events = [
+const events = [
   // User Activity Events
   "message_received",
   "bot_channel_join",

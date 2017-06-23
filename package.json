@@ -15,10 +15,18 @@
     "bot",
     "rss"
   ],
-  "contributors": ["Artur Sęp", "Scott Spence", "Simon Morgan <sjm@sjm.io>"],
+  "contributors": [
+    "Artur Sęp",
+    "Scott Spence",
+    "Simon Morgan <sjm@sjm.io>"
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/chingubotsteam5/rssbot/issues"
   },
-  "homepage": "https://github.com/chingubotsteam5/rssbot#readme"
+  "homepage": "https://github.com/chingubotsteam5/rssbot#readme",
+  "dependencies": {
+    "botkit": "^0.5.4",
+    "dotenv": "^4.0.0"
+  }
 }

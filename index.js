@@ -16,8 +16,8 @@ let bot = controller.spawn({
   token: process.env.BOT_OAUTH_TOKEN
 });
 
-bot.startRTM(function (err, bot, payload) {
-  console.log(`err: ${err}`);
-  console.log(`bot: ${bot}`);
-  console.log(`payload: ${payload}`);
+bot.startRTM(function (err) {
+  if (err) {
+    console.error(err);
+  }
 });

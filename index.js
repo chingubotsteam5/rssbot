@@ -42,3 +42,8 @@ const events = [
 events.forEach((event) => {
   controller.on(event, () => console.log(event + " event fired"));
 });
+
+controller.hears("hello", "direct_message,direct_mention,mention", function (
+  bot, msg) {
+    bot.reply(msg, "y helo thar");
+});

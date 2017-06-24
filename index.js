@@ -4,9 +4,9 @@ require("dotenv").config();
 
 const Botkit = require("botkit");
 
-if (!process.env.BOT_OAUTH_TOKEN) {
+if (!process.env.BOT_OAUTH_TOKEN || !process.env.PORT) {
   console.error(
-    "BOT_OAUTH_TOKEN environment variable not defined");
+    "BOT_OAUTH_TOKEN or PORT environment variables not defined");
   process.exit(1);
 }
 
@@ -15,6 +15,10 @@ const controller = Botkit.slackbot({});
 const bot = controller.spawn({
   token: process.env.BOT_OAUTH_TOKEN
 }).startRTM();
+
+controller.setupWebserver(process.env.PORT, function () {
+  controller.createWebhookEndpoints(controller.webserver);
+});
 
 process.on("exit", bot.destroy);
 process.on("SIGINT", () => {
@@ -45,5 +49,5 @@ events.forEach((event) => {
 
 controller.hears("hello", "direct_message,direct_mention,mention", function (
   bot, msg) {
-    bot.reply(msg, "y helo thar");
+  bot.reply(msg, "y helo thar");
 });

@@ -4,6 +4,9 @@ require("dotenv").config();
 
 const Botkit = require("botkit");
 
+// The channels the bot is a member of
+const memberChannels = [];
+
 if (!process.env.BOT_OAUTH_TOKEN || !process.env.PORT) {
   console.error(
     "BOT_OAUTH_TOKEN or PORT environment variables not defined");
@@ -31,7 +34,43 @@ process.on("SIGINT", () => {
   process.exit(1);
 });
 
+// Call the relevant API methods to discern which channels/groups we're
+// a member of.
+function findMemberChannels() {
+  bot.api.channels.list({
+    exclude_archived: true,
+    exclude_members: true
+  }, function (err, response) {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    response.channels.forEach((channel) => {
+      if (channel.is_member) {
+        if (memberChannels.indexOf(channel.id) === -1) {
+          memberChannels.push(channel.id);
+        }
+      }
+    });
+  });
+
+  bot.api.groups.list({
+    exclude_archived: true
+  }, function (err, response) {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    response.groups.forEach((group) => {
+      if (memberChannels.indexOf(group.id) === -1) {
+        memberChannels.push(group.id);
+      }
+    });
+  });
+}
+
 const events = [
+  "hello",
   // User Activity Events
   "message_received",
   "bot_channel_join",
@@ -51,6 +90,9 @@ const events = [
 events.forEach((event) => {
   controller.on(event, () => console.log(event + " event fired"));
 });
+
+// "hello" is fired when we're connected
+controller.on("hello", () => findMemberChannels());
 
 controller.hears("ping", "direct_message,direct_mention,mention", function (
   bot, msg) {

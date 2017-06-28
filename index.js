@@ -69,27 +69,29 @@ function findMemberChannels() {
   });
 }
 
-const events = [
-  "hello",
-  // User Activity Events
-  "message_received",
-  "bot_channel_join",
-  "user_channel_join",
-  "bot_group_join",
-  "user_group_join",
-  // Message Received Events
-  "direct_message",
-  "direct_mention",
-  "mention",
-  "ambient",
-  // Websocket Events
-  "rtm_open",
-  "rtm_close",
-  "rtm_reconnect_failed"
-];
-events.forEach((event) => {
-  controller.on(event, () => console.log(event + " event fired"));
-});
+if (process.env.DEBUG === "true") {
+  const events = [
+    "hello",
+    // User Activity Events
+    "message_received",
+    "bot_channel_join",
+    "user_channel_join",
+    "bot_group_join",
+    "user_group_join",
+    // Message Received Events
+    "direct_message",
+    "direct_mention",
+    "mention",
+    "ambient",
+    // Websocket Events
+    "rtm_open",
+    "rtm_close",
+    "rtm_reconnect_failed"
+  ];
+  events.forEach((event) => {
+    controller.on(event, () => console.log(event + " event fired"));
+  });
+}
 
 // "hello" is fired when we're connected
 controller.on("hello", () => findMemberChannels());

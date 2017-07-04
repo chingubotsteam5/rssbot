@@ -98,5 +98,5 @@ controller.on("hello", () => findMemberChannels());
 
 controller.hears("ping", "direct_message,direct_mention,mention", function (
   bot, msg) {
-  bot.reply(msg, "Pong!");
+  bot.reply(msg, "Pong! Listening on " + memberChannels.join(", "));
 });

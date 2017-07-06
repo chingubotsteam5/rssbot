@@ -4,6 +4,8 @@ require("dotenv").config();
 
 const Botkit = require("botkit");
 
+let rss = require("./rss.js");
+
 // The channels the bot is a member of
 const memberChannels = [];
 
@@ -94,9 +96,30 @@ if (process.env.DEBUG === "true") {
 }
 
 // "hello" is fired when we're connected
-controller.on("hello", () => findMemberChannels());
+controller.on("hello", () => {
+  findMemberChannels();
+  rss.setCallback((article) => {
+    postArticle(article);
+  });
+  rss.startFeedCheck();
+});
 
 controller.hears("ping", "direct_message,direct_mention,mention", function (
   bot, msg) {
   bot.reply(msg, "Pong! Listening on " + memberChannels.join(", "));
 });
+
+function postArticle(article) {
+  memberChannels.forEach(function (memberChannel) {
+    bot.api.chat.postMessage({
+      channel: memberChannel,
+      text: `${article.title} ${article.link}\n<${article.comments}|Comments>`
+    }, function (err, response) {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log(response);
+      }
+    });
+  });
+}

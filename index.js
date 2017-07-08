@@ -4,7 +4,7 @@ require("dotenv").config();
 
 const Botkit = require("botkit");
 
-let rss = require("./rss.js");
+const rss = require("./rss.js");
 
 // The channels the bot is a member of
 const memberChannels = [];

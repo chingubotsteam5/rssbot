@@ -3,8 +3,7 @@
 require("dotenv").config();
 
 const Botkit = require("botkit");
-
-const rss = require("./rss.js");
+const RSS = require("./rss.js");
 
 // The channels the bot is a member of
 const memberChannels = [];
@@ -98,10 +97,10 @@ if (process.env.DEBUG === "true") {
 // "hello" is fired when we're connected
 controller.on("hello", () => {
   findMemberChannels();
-  rss.setCallback((article) => {
+  RSS.setCallback((article) => {
     postArticle(article);
   });
-  rss.startFeedCheck();
+  RSS.startFeedCheck();
 });
 
 controller.hears("ping", "direct_message,direct_mention,mention", function (

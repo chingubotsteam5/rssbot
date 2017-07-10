@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/chingubotsteam5/rssbot#readme",
   "dependencies": {
+    "@ponko2/botkit-heroku-keepalive": "^0.10.0",
     "botkit": "^0.5.4",
     "crc": "^3.4.4",
     "dotenv": "^4.0.0",

@@ -17,11 +17,6 @@ if (!process.env.SLACK_OAUTH_TOKEN || !process.env.PORT) {
 
 const controller = Botkit.slackbot({});
 
-// Connect to the Slack Real Time Messaging API
-const bot = controller.spawn({
-  token: process.env.SLACK_OAUTH_TOKEN
-}).startRTM();
-
 // Heroku shits the bed if it doesn't have something listening on the
 // port that it hands you in the PORT environment variable, so we spawn
 // a web server on it. This is also needed for receiving webhooks so
@@ -34,7 +29,7 @@ controller.setupWebserver(process.env.PORT, function () {
 
 // Connect to the Slack Real Time Messaging API
 const bot = controller.spawn({
-  token: process.env.BOT_OAUTH_TOKEN
+  token: process.env.SLACK_OAUTH_TOKEN
 }).startRTM(function (err) {
   if (err) {
     throw new Error(err);

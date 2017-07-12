@@ -3,6 +3,7 @@
 require("dotenv").config();
 
 const Botkit = require("botkit");
+const HerokuKeepalive = require('@ponko2/botkit-heroku-keepalive');
 const RSS = require("./rss.js");
 
 // The channels the bot is a member of
@@ -25,8 +26,21 @@ const bot = controller.spawn({
 // port that it hands you in the PORT environment variable, so we spawn
 // a web server on it. This is also needed for receiving webhooks so
 // we set that up too.
+let herokuKeepalive;
 controller.setupWebserver(process.env.PORT, function () {
   controller.createWebhookEndpoints(controller.webserver);
+  herokuKeepalive = new HerokuKeepalive(controller);
+});
+
+// Connect to the Slack Real Time Messaging API
+const bot = controller.spawn({
+  token: process.env.BOT_OAUTH_TOKEN
+}).startRTM(function (err) {
+  if (err) {
+    throw new Error(err);
+  }
+
+  herokuKeepalive.start();
 });
 
 process.on("exit", bot.destroy);
